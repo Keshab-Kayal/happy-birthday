@@ -153,6 +153,13 @@
       margin: 0 auto;
       animation: cake-pop 1s cubic-bezier(.68,-0.55,.27,1.55);
     }
+    .cake-base,
+    .cake-layer,
+    .cake-icing {
+      position: absolute;
+      left: 0;
+      margin: 0 auto;
+    }
     @keyframes cake-pop {
       0% { transform: scale(0.2) translateY(100px); opacity: 0; }
       80% { transform: scale(1.1) translateY(-10px); opacity: 1; }
@@ -342,44 +349,46 @@
       }
       .cake {
         width: 90vw !important;
-        height: 40vw !important;
-        min-width: 160px;
-        min-height: 160px;
-        max-width: 95vw;
-        max-height: 60vw;
+        max-width: 320px;
+        height: 48vw !important;
+        max-height: 220px;
+        min-width: 180px;
+        min-height: 120px;
+        margin: 0 auto !important;
       }
       .cake-base,
       .cake-layer,
       .cake-icing {
         left: 0 !important;
+        margin: 0 auto !important;
         width: 80vw !important;
+        max-width: 280px;
         min-width: 120px;
-        max-width: 90vw;
       }
       .cake-base {
-        height: 20vw !important;
-        min-height: 40px;
-        max-height: 60px;
+        height: 16vw !important;
+        max-height: 50px;
+        min-height: 30px;
       }
       .cake-layer {
-        bottom: 20vw !important;
-        height: 20vw !important;
-        min-height: 40px;
-        max-height: 60px;
+        bottom: 16vw !important;
+        height: 16vw !important;
+        max-height: 50px;
+        min-height: 30px;
       }
       .cake-icing {
-        bottom: 36vw !important;
-        height: 8vw !important;
-        min-height: 20px;
-        max-height: 30px;
+        bottom: 32vw !important;
+        height: 7vw !important;
+        max-height: 28px;
+        min-height: 16px;
       }
       .candle {
         bottom: 38vw !important;
-        width: 6vw !important;
-        height: 16vw !important;
+        width: 7vw !important;
+        height: 18vw !important;
         min-width: 14px;
         min-height: 36px;
-        margin-left: -3vw !important;
+        margin-left: -3.5vw !important;
       }
       .flame {
         width: 7vw !important;
@@ -395,30 +404,36 @@
         justify-content: flex-start;
       }
       #slide-img {
-        max-width: 95vw !important;
+        max-width: 90vw !important;
         max-height: 40vh !important;
-        margin-top: 10vw !important;
+        margin-top: 8vw !important;
+        border-radius: 12px !important;
       }
       #slide-msg {
         font-size: 1.2em !important;
         padding: 0 5vw;
+        margin-top: 4vw !important;
       }
       #friends-slide {
         flex-direction: column !important;
-        gap: 16px !important;
+        gap: 4vw !important;
+        width: 100vw;
+        align-items: center !important;
       }
       #friends-img {
-        width: 40vw !important;
-        height: 40vw !important;
-        min-width: 100px;
-        min-height: 100px;
+        width: 44vw !important;
+        height: 44vw !important;
+        min-width: 90px;
+        min-height: 90px;
         max-width: 60vw;
         max-height: 60vw;
+        border-radius: 50% !important;
       }
       #friends-msg {
         font-size: 1.1em !important;
         max-width: 90vw !important;
-        padding: 18px 10vw !important;
+        padding: 14px 6vw !important;
+        margin-top: 2vw !important;
       }
       #friends-intro {
         font-size: 1.3em !important;
