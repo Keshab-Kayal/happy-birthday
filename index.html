@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Happy Birthday ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
 
   <style>
     body {
       margin: 0;
-      overflow: hidden;
-      background: linear-gradient(to top right, #ffccd5, #ffe6ea);
+      overflow-y: auto;
+      background: #ffe6ea; /* Light pink */
       font-family: 'Comic Sans MS', cursive;
       text-align: center;
     }
@@ -97,47 +98,404 @@
       height: 100%;
       object-fit: cover;
     }
+
+    .balloon {
+      position: absolute;
+      width: 60px;
+      height: 80px;
+      background: red;
+      border-radius: 30px 30px 30px 30px / 40px 40px 40px 40px;
+      animation: floatUp 10s linear infinite;
+      bottom: -100px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+      z-index: 2;
+    }
+    .balloon::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -20px;
+      width: 2px;
+      height: 20px;
+      background: #888;
+      transform: translateX(-50%);
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-120vh); }
+    }
+    .pop-effect {
+      animation: pop 0.3s forwards;
+    }
+    @keyframes pop {
+      to { transform: scale(1.3) rotate(20deg); opacity: 0; }
+    }
+
+    /* Cake frame styles */
+    body.dark-bg {
+      background: radial-gradient(ellipse at center, #222 60%, #000 100%) !important;
+      transition: background 1s;
+    }
+    #cake-frame {
+      position: absolute;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+    }
+    .cake {
+      position: relative;
+      width: 180px;
+      height: 180px;
+      margin: 0 auto;
+      animation: cake-pop 1s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    @keyframes cake-pop {
+      0% { transform: scale(0.2) translateY(100px); opacity: 0; }
+      80% { transform: scale(1.1) translateY(-10px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .cake-base {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 180px;
+      height: 60px;
+      background: #b5651d;
+      border-radius: 30px 30px 0px 0px / 20px 20px 0px 0px; /* Make the base a rectangle */
+      z-index: 1;
+    }
+    .cake-layer {
+      position: absolute;
+      bottom: 60px;
+      left: 15px;
+      width: 150px;
+      height: 60px;
+      background: #ffb6b9;
+      border-radius: 30px 30px 0px 0px / 20px 20px 0px 0px;
+      z-index: 2;
+    }
+    .cake-icing {
+      position: absolute;
+      bottom: 110px;
+      left: 25px;
+      width: 130px;
+      height: 30px;
+      background: #fff;
+      border-radius: 65px 65px 30px 30px / 30px 30px 20px 20px;
+      z-index: 3;
+      box-shadow: 0 8px 12px -8px #ffb6b9 inset;
+    }
+    .candle {
+      position: absolute;
+      left: 50%;
+      bottom: 140px;   /* Adjust this value to move the candle up/down */
+      width: 16px;
+      height: 50px;
+      margin-left: -8px; /* Half of width to center */
+      z-index: 4;
+      background: repeating-linear-gradient(135deg, #fff 0 6px, #ffb6b9 6px 12px);
+      border-radius: 8px;
+      box-shadow: 0 2px 6px #fff4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    @keyframes candle-bounce {
+      0% { transform: scaleY(0.2) translateY(-30px); opacity: 0; }
+      80% { transform: scaleY(1.1) translateY(5px); opacity: 1; }
+      100% { transform: scaleY(1) translateY(0); opacity: 1; }
+    }
+    .wick {
+      width: 3px;
+      height: 12px;
+      background: #222;
+      margin: 0 auto;
+      margin-top: -12px;
+      border-radius: 2px;
+      z-index: 5;
+    }
+    .flame {
+      width: 18px;
+      height: 28px;
+      background: radial-gradient(ellipse at center, #fff700 60%, #ff9800 90%, transparent 100%);
+      border-radius: 50% 50% 60% 60%;
+      margin: -18px auto 0 auto;
+      animation: flame-flicker 0.6s infinite alternate;
+      z-index: 6;
+      filter: blur(0.5px);
+      opacity: 0.85;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+    @keyframes flame-flicker {
+      0% { transform: scaleY(1) scaleX(1) translateY(0); opacity: 0.9; }
+      60% { transform: scaleY(1.1) scaleX(0.95) translateY(-2px); opacity: 1; }
+      100% { transform: scaleY(0.95) scaleX(1.05) translateY(2px); opacity: 0.8; }
+    }
+    .cake-text {
+      margin-top: 30px;
+      font-size: 1.7em;
+      color: #fff;
+      text-shadow: 0 2px 8px #000a;
+      animation: cake-text-fade 2s 1.5s both;
+    }
+    @keyframes cake-text-fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    /* Add to your CSS */
+    .flame.blow {
+      animation: blow-away 0.7s forwards;
+    }
+    @keyframes blow-away {
+      to {
+        opacity: 0;
+        transform: scaleY(0.2) scaleX(1.5) translateY(-30px);
+      }
+    }
+
+    /* Slideshow styles */
+    #slideshow {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 230, 234, 0.98);
+      z-index: 200;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #slide-img {
+      max-width: 80vw;
+      max-height: 60vh;
+      border-radius: 20px;
+      box-shadow: 0 4px 32px #0002;
+      margin-top: 60px;
+      cursor: pointer;
+    }
+    #slide-msg {
+      margin-top: 30px;
+      font-size: 2em;
+      color: #b30059;
+      text-shadow: 0 2px 8px #fff8;
+    }
+
+    /* New friends slideshow styles */
+    #friends-slideshow {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(230, 245, 255, 0.98);
+      z-index: 201;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #friends-intro {
+      font-size: 2.2em;
+      color: #1565c0;
+      margin-top: 60px;
+      margin-bottom: 30px;
+      text-shadow: 0 2px 8px #fff8;
+    }
+    #friends-slide {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+    }
+    #friends-img {
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 4px 32px #0002;
+      border: 6px solid #fff;
+    }
+    #friends-msg {
+      max-width: 40vw;
+      font-size: 1.5em;
+      color: #0d47a1;
+      background: #fff;
+      border-radius: 18px;
+      padding: 30px 40px;
+      box-shadow: 0 2px 16px #0001;
+    }
+
+    /* Responsive adjustments for mobile */
+    @media (max-width: 600px) {
+      .start-message,
+      .message,
+      .cake-text {
+        font-size: 1.1em !important;
+        padding: 0 5vw;
+      }
+      .cake {
+        width: 90vw !important;
+        height: 40vw !important;
+        min-width: 160px;
+        min-height: 160px;
+        max-width: 95vw;
+        max-height: 60vw;
+      }
+      .cake-base,
+      .cake-layer,
+      .cake-icing {
+        left: 0 !important;
+        width: 80vw !important;
+        min-width: 120px;
+        max-width: 90vw;
+      }
+      .cake-base {
+        height: 20vw !important;
+        min-height: 40px;
+        max-height: 60px;
+      }
+      .cake-layer {
+        bottom: 20vw !important;
+        height: 20vw !important;
+        min-height: 40px;
+        max-height: 60px;
+      }
+      .cake-icing {
+        bottom: 36vw !important;
+        height: 8vw !important;
+        min-height: 20px;
+        max-height: 30px;
+      }
+      .candle {
+        bottom: 38vw !important;
+        width: 6vw !important;
+        height: 16vw !important;
+        min-width: 14px;
+        min-height: 36px;
+        margin-left: -3vw !important;
+      }
+      .flame {
+        width: 7vw !important;
+        height: 10vw !important;
+        min-width: 14px;
+        min-height: 20px;
+        margin-top: -5vw !important;
+      }
+      #slideshow,
+      #friends-slideshow {
+        padding: 0;
+        align-items: center;
+        justify-content: flex-start;
+      }
+      #slide-img {
+        max-width: 95vw !important;
+        max-height: 40vh !important;
+        margin-top: 10vw !important;
+      }
+      #slide-msg {
+        font-size: 1.2em !important;
+        padding: 0 5vw;
+      }
+      #friends-slide {
+        flex-direction: column !important;
+        gap: 16px !important;
+      }
+      #friends-img {
+        width: 40vw !important;
+        height: 40vw !important;
+        min-width: 100px;
+        min-height: 100px;
+        max-width: 60vw;
+        max-height: 60vw;
+      }
+      #friends-msg {
+        font-size: 1.1em !important;
+        max-width: 90vw !important;
+        padding: 18px 10vw !important;
+      }
+      #friends-intro {
+        font-size: 1.3em !important;
+        margin-top: 8vw !important;
+        margin-bottom: 4vw !important;
+        padding: 0 5vw;
+      }
+    }
   </style>
 </head>
 <body>
-
-<div class="start-message">💖 Pop all the hearts to reveal your surprise 🎁</div>
+<div class="start-message">🎈 Pop all the balloons to reveal your surprise! 🎁</div>
 
 <div class="message" id="message">
-  💝 Happy Birthday My Love! 💝<br>
-  Here's a little book of our memories 💑
+  <span style="font-size:2.2em;">🎂 Happy Birthday, Kanganaaaa! 🎂</span><br>
+  <span style="font-size:1.3em;">
+    You fill our life with color and joy.<br>
+    Here’s a little journey through our sweetest memories together. 💖
+  </span>
 </div>
 
-<div id="flipbook">
-  <div class="page"><img src="photo1.jpg" alt="1"></div>
-  <div class="page"><img src="photo2.jpg" alt="2"></div>
-  <div class="page"><img src="photo3.jpg" alt="3"></div>
-  <div class="page"><img src="photo4.jpg" alt="4"></div>
-  <div class="page"><img src="photo5.jpg" alt="5"></div>
-  <div class="page"><img src="photo6.jpg" alt="6"></div>
-  <div class="page"><img src="photo7.jpg" alt="7"></div>
-  <div class="page"><img src="photo8.jpg" alt="8"></div>
-  <div class="page"><img src="photo9.jpg" alt="9"></div>
-  <div class="page"><img src="photo10.jpg" alt="10"></div>
+<!-- Cake and candle container, hidden by default -->
+<div id="cake-frame" style="display:none;">
+  <div class="cake">
+    <div class="cake-base"></div>
+    <div class="cake-layer"></div>
+    <div class="cake-icing"></div>
+    <div class="candle">
+      <div class="wick"></div>
+      <div class="flame" id="flame"></div>
+    </div>
+  </div>
+  <div class="cake-text" id="cake-text">Make a wish !<br>Click on the flame to blow the candle 🕯️</div>
 </div>
+
+<!-- Slideshow container, hidden by default -->
+<div id="slideshow" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(255,230,234,0.98); z-index:200; flex-direction:column; align-items:center; justify-content:center;">
+  <img id="slide-img" src="" alt="Slideshow" style="max-width:80vw; max-height:60vh; border-radius:20px; box-shadow:0 4px 32px #0002; margin-top:60px; cursor:pointer;">
+  <div id="slide-msg" style="margin-top:30px; font-size:2em; color:#b30059; text-shadow:0 2px 8px #fff8;"></div>
+</div>
+
+<!-- Add this new slideshow container after your first slideshow, before the canvas -->
+<div id="friends-slideshow" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(230,245,255,0.98); z-index:201; flex-direction:column; align-items:center; justify-content:center;">
+  <div id="friends-intro" style="font-size:2.2em; color:#1565c0; margin-top:60px; margin-bottom:30px; text-shadow:0 2px 8px #fff8;">
+    Some special wishes from your loved ones! 🎉
+  </div>
+  <div id="friends-slide" style="display:flex; align-items:center; justify-content:center; gap:40px;">
+    <img id="friends-img" src="" alt="Friend Slide" style="width:260px; height:260px; border-radius:50%; object-fit:cover; box-shadow:0 4px 32px #0002; border:6px solid #fff;">
+    <div id="friends-msg" style="max-width:40vw; font-size:1.5em; color:#0d47a1; background:#fff; border-radius:18px; padding:30px 40px; box-shadow:0 2px 16px #0001;"></div>
+  </div>
+</div>
+
+<canvas id="fireworks-canvas" style="display:none; position:fixed; left:0; top:0; width:100vw; height:100vh; pointer-events:none; z-index:100;"></canvas>
 
 <script>
-  const totalHearts = 10;
+  const totalBalloons = 10;
   let popped = 0;
+  const balloonColors = [
+    '#ff4d6d', '#ffb84d', '#4dd2ff', '#baffc9', '#ffd6e0',
+    '#f9ffb6', '#b28dff', '#ffb3ba', '#caff70', '#ffecb3'
+  ];
 
-  for (let i = 0; i < totalHearts; i++) {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.style.left = `${Math.random() * 90}vw`;
-    heart.style.animationDuration = `${9 + Math.random() * 4}s`;
+  for (let i = 0; i < totalBalloons; i++) {
+    const balloon = document.createElement('div');
+    balloon.classList.add('balloon');
+    balloon.style.left = `${5 + Math.random() * 85}vw`;
+    balloon.style.background = balloonColors[i % balloonColors.length];
+    balloon.style.animationDuration = `${8 + Math.random() * 4}s`;
 
-    heart.addEventListener('click', () => {
-      heart.remove();
+    balloon.addEventListener('click', () => {
+      balloon.classList.add('pop-effect');
+      setTimeout(() => balloon.remove(), 250);
       popped++;
-      if (popped === totalHearts) showMessage();
+      if (popped === totalBalloons) showMessage();
     });
 
-    document.body.appendChild(heart);
+    document.body.appendChild(balloon);
   }
 
   function showMessage() {
@@ -147,21 +505,217 @@
 
     setTimeout(() => {
       msg.style.display = 'none';
-      showFlipbook();
-    }, 4000);
+      document.body.classList.add('dark-bg');
+      document.getElementById('cake-frame').style.display = 'flex';
+
+      // Attach the click event directly to the flame
+      const flame = document.getElementById('flame');
+      flame.style.opacity = 0.85;
+      flame.style.pointerEvents = "auto";
+      flame.onclick = function handleFlameClick() {
+        flame.style.transition = "opacity 1s cubic-bezier(.4,2,.6,1)";
+        flame.style.opacity = 0;
+        flame.style.pointerEvents = "none";
+        flame.onclick = null; // Remove the click handler permanently
+        setTimeout(() => {
+          // Remove the entire candle after the flame is gone
+          const candle = flame.parentElement;
+          if (candle) candle.remove();
+          document.getElementById('cake-text').innerHTML = "Happy Birthday! 🎉<br>May all your wishes come true!";
+
+          // Show fireworks
+          startFireworks();
+        }, 1000);
+      };
+    }, 3000);
   }
 
-  function showFlipbook() {
-    const book = document.getElementById('flipbook');
-    book.style.display = 'block';
+  // --- Fireworks code ---
+  function startFireworks() {
+    const canvas = document.getElementById('fireworks-canvas');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.style.display = 'block';
+    const ctx = canvas.getContext('2d');
+    let fireworks = [];
+    let stopFireworks = false;
 
-    $('#flipbook').turn({
-      width: 600,
-      height: 400,
-      autoCenter: true,
-      elevation: 50,
-      gradients: true
-    });
+    function randomColor() {
+      const colors = ['#ffec58','#ff4d6d','#4dd2ff','#baffc9','#ffd6e0','#f9ffb6','#b28dff','#ffb3ba','#caff70','#ffecb3'];
+      return colors[Math.floor(Math.random()*colors.length)];
+    }
+
+    function Firework() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height;
+      this.targetY = 150 + Math.random() * (canvas.height/2 - 150);
+      this.color = randomColor();
+      this.radius = 2 + Math.random() * 2;
+      this.speed = 6 + Math.random() * 2;
+      this.exploded = false;
+      this.particles = [];
+    }
+    Firework.prototype.update = function() {
+      if (!this.exploded) {
+        this.y -= this.speed;
+        if (this.y <= this.targetY) {
+          this.exploded = true;
+          for (let i = 0; i < 30; i++) {
+            const angle = (Math.PI * 2) * (i/30);
+            const speed = 2 + Math.random() * 3;
+            this.particles.push({
+              x: this.x,
+              y: this.y,
+              vx: Math.cos(angle) * speed,
+              vy: Math.sin(angle) * speed,
+              alpha: 1,
+              color: this.color
+            });
+          }
+        }
+      } else {
+        this.particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += 0.03; // gravity
+          p.alpha -= 0.015;
+        });
+        this.particles = this.particles.filter(p => p.alpha > 0);
+      }
+    };
+    Firework.prototype.draw = function(ctx) {
+      if (!this.exploded) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      } else {
+        this.particles.forEach(p => {
+          ctx.globalAlpha = p.alpha;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          ctx.globalAlpha = 1;
+        });
+      }
+    };
+
+    function animate() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      if (!stopFireworks && Math.random() < 0.08) fireworks.push(new Firework());
+      fireworks.forEach(fw => { fw.update(); fw.draw(ctx); });
+      fireworks = fireworks.filter(fw => !fw.exploded || fw.particles.length > 0);
+      if ((fireworks.length > 0 || Math.random() < 0.95) && !stopFireworks) {
+        requestAnimationFrame(animate);
+      } else {
+        setTimeout(() => {
+          canvas.style.display = 'none';
+          showSlideshow();
+        }, 1000);
+      }
+    }
+    animate();
+
+    // Stop fireworks and show slideshow on next click
+    function stopAndShow() {
+      stopFireworks = true;
+      document.removeEventListener('click', stopAndShow);
+    }
+    setTimeout(() => {
+      document.addEventListener('click', stopAndShow);
+    }, 500); // Give a short delay to avoid immediate stop from previous click
+  }
+
+  // Show slideshow after fireworks
+  function showSlideshow() {
+    const images = [
+      "cherry1.jpg",
+      "cherry2.jpg",
+      "cherry3.jpg",
+      "trio.jpg",
+      "keshab.jpg",
+      "cherry4.jpg",
+      "group.jpg"
+    ];
+    const messages = [
+      "You are my sunshine ☀️",
+      "Every moment with you is special 💖",
+      "Your smile brightens my world 😊",
+      "Thank you for being you 🌸",
+      "Together, we make the best memories 📸",
+      "You are my favorite adventure 🌍",
+      "Happy Birthday, my love! 🎂"
+    ];
+
+    let idx = 0;
+    const slideshow = document.getElementById('slideshow');
+    const slideImg = document.getElementById('slide-img');
+    const slideMsg = document.getElementById('slide-msg');
+
+    function showSlide(i) {
+      slideImg.src = images[i];
+      slideMsg.textContent = messages[i];
+    }
+
+    slideshow.style.display = 'flex';
+    showSlide(idx);
+
+    slideImg.onclick = function() {
+      idx++;
+      if (idx < images.length) {
+        showSlide(idx);
+      } else {
+        // Hide slideshow when done
+        slideshow.style.display = 'none';
+        showFriendsSlideshow();
+      }
+    };
+  }
+
+  // Add this function after showSlideshow()
+  function showFriendsSlideshow() {
+    const images = [
+      "keshab3.jpg",
+      "hriti.jpg",
+      "khushi.jpg",
+      "mohit.jpg"
+    ];
+    const messages = [
+      "<b>keshab:</b> Happy Birthday! You are the heart of our group. Stay awesome! 💕",
+      "<b>Hritii:</b> Happy Birthdayy Zombie👾. You have to be the only person that I am this close to in my life. You are my cheer person, my supporter, my mentor, my best friend, everything else like a family. I’m not even kidding when I say I love you the most and I always always want you beside me not matter how old we get. ♡♡♡♡♡. Have a great day today, turning 20. That is huge!! Please be excited about it and demand everything that makes you happy. ♥ 🎈",
+      "<b>Khushi:</b>Happy 20th cupcake😉.You’re no longer a teen, but still broke, confused, and constantly hungry. Some things never change.Hope your adulting skills come in soon — Amazon doesn’t deliver those. Love you!!! 👨‍👩‍👧",
+      "<b>Mohit:</b> Happy Birthday, Gomti! 🎉 Wishing you endless blessings—always stay happy, safe, and healthy. No matter what life brings, remember that your big brother is always here for you. I’m proud of you and always rooting for you. Enjoy your special day to the fullest—you deserve all the happiness in the world! 💖✨! 🌸"
+    ];
+
+    let idx = 0;
+    const friendsSlideshow = document.getElementById('friends-slideshow');
+    const friendsIntro = document.getElementById('friends-intro');
+    const friendsImg = document.getElementById('friends-img');
+    const friendsMsg = document.getElementById('friends-msg');
+
+    function showSlide(i) {
+      friendsImg.src = images[i];
+      friendsMsg.innerHTML = messages[i];
+      if (i === 0) {
+        friendsIntro.style.display = 'block';
+      } else {
+        friendsIntro.style.display = 'none';
+      }
+    }
+
+    friendsSlideshow.style.display = 'flex';
+    showSlide(idx);
+
+    document.getElementById('friends-slide').onclick = function() {
+      idx++;
+      if (idx < images.length) {
+        showSlide(idx);
+      } else {
+        friendsSlideshow.style.display = 'none';
+        // Optionally, you can show a final message or restart
+      }
+    };
   }
 </script>
 
