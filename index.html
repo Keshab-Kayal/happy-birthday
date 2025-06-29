@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday ❤️</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/4.1.0/turn.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: linear-gradient(to top right, #ffccd5, #ffe6ea);
+      font-family: 'Comic Sans MS', cursive;
+      text-align: center;
+    }
+
+    .start-message {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      font-size: 2em;
+      color: #b30059;
+      z-index: 10;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+    }
+
+    .heart {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: red;
+      transform: rotate(-45deg);
+      animation: float 12s linear infinite;
+      bottom: 0;
+      cursor: pointer;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -30px;
+      left: 0;
+    }
+
+    .heart::after {
+      top: 0;
+      left: 30px;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(-45deg); }
+      100% { transform: translateY(-120vh) rotate(-45deg); }
+    }
+
+    .message {
+      display: none;
+      position: absolute;
+      top: 25%;
+      width: 100%;
+      color: #e60073;
+      font-size: 2em;
+    }
+
+    #flipbook {
+      display: none;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 400px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.2);
+    }
+
+    #flipbook .page {
+      background: white;
+      border: 1px solid #ccc;
+      overflow: hidden;
+    }
+
+    #flipbook img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+<div class="start-message">💖 Pop all the hearts to reveal your surprise 🎁</div>
+
+<div class="message" id="message">
+  💝 Happy Birthday My Love! 💝<br>
+  Here's a little book of our memories 💑
+</div>
+
+<div id="flipbook">
+  <div class="page"><img src="photo1.jpg" alt="1"></div>
+  <div class="page"><img src="photo2.jpg" alt="2"></div>
+  <div class="page"><img src="photo3.jpg" alt="3"></div>
+  <div class="page"><img src="photo4.jpg" alt="4"></div>
+  <div class="page"><img src="photo5.jpg" alt="5"></div>
+  <div class="page"><img src="photo6.jpg" alt="6"></div>
+  <div class="page"><img src="photo7.jpg" alt="7"></div>
+  <div class="page"><img src="photo8.jpg" alt="8"></div>
+  <div class="page"><img src="photo9.jpg" alt="9"></div>
+  <div class="page"><img src="photo10.jpg" alt="10"></div>
+</div>
+
+<script>
+  const totalHearts = 10;
+  let popped = 0;
+
+  for (let i = 0; i < totalHearts; i++) {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.style.left = `${Math.random() * 90}vw`;
+    heart.style.animationDuration = `${9 + Math.random() * 4}s`;
+
+    heart.addEventListener('click', () => {
+      heart.remove();
+      popped++;
+      if (popped === totalHearts) showMessage();
+    });
+
+    document.body.appendChild(heart);
+  }
+
+  function showMessage() {
+    document.querySelector('.start-message').style.display = 'none';
+    const msg = document.getElementById('message');
+    msg.style.display = 'block';
+
+    setTimeout(() => {
+      msg.style.display = 'none';
+      showFlipbook();
+    }, 4000);
+  }
+
+  function showFlipbook() {
+    const book = document.getElementById('flipbook');
+    book.style.display = 'block';
+
+    $('#flipbook').turn({
+      width: 600,
+      height: 400,
+      autoCenter: true,
+      elevation: 50,
+      gradients: true
+    });
+  }
+</script>
+
+</body>
+</html>
